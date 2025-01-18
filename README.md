@@ -10,7 +10,7 @@
             font-family: Arial, sans-serif;
             margin: 0;
             padding: 0;
-            background-color: #f8f5f9;
+            background-color: #f0f0f0;
         }
 
         .container {
