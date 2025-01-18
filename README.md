@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>钟钟的个人站</title>
+    <link rel="icon" href="favicon.ico" type="image/x-icon">
+    <style>
     <style>
         body {
             font-family: Arial, sans-serif;
@@ -47,14 +49,12 @@
             margin: 0 10px;
         }
 
-        /* 新增样式：个人简介部分 */
         .bio {
             margin-top: 20px;
             text-align: justify;
             line-height: 1.6;
         }
 
-        /* 新增样式：技能列表部分 */
         .skills {
             margin-top: 20px;
         }
@@ -68,7 +68,6 @@
             margin-bottom: 5px;
         }
 
-        /* 新增样式：兴趣爱好部分 */
         .hobbies {
             margin-top: 20px;
         }
@@ -93,12 +92,10 @@
             <p>QQ：<a href="https://user.qzone.qq.com/2545458091">2545458091</a></p>
             <p>邮箱：<a href="mailto:2545458091@qq.com">2545458091@qq.com</a></p>
         </div>
-        <!-- 新增个人简介部分 -->
         <div class="bio">
             <h2>个人简介</h2>
             <p>大家好，我是钟钟，一个对编程充满热情的人。在我的日常生活中，我喜欢探索新的知识和技能，不断挑战自己，追求进步。我相信，通过不断地学习和实践，我们可以不断地成长和提升自己。</p>
         </div>
-        <!-- 新增技能列表部分 -->
         <div class="skills">
             <h2>技能列表</h2>
             <ul>
@@ -107,7 +104,6 @@
                 <li>刷b站：哔哩哔哩爱好者</li>
             </ul>
         </div>
-        <!-- 新增兴趣爱好部分 -->
         <div class="hobbies">
             <h2>兴趣爱好</h2>
             <ul>
