@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>404 - 页面未找到</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #f4f4f9;
+        }
+        .container {
+            text-align: center;
+        }
+        h1 {
+            font-size: 5rem;
+            color: #333;
+        }
+        p {
+            font-size: 1.2rem;
+            color: #666;
+        }
+        a {
+            text-decoration: none;
+            color: #007BFF;
+        }
+        a:hover {
+            text-decoration: underline;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>404</h1>
+        <p>抱歉，您访问的页面不存在。</p>
+        <a href="#" id="return-home">返回首页</a>
+    </div>
+
+    <script>
+        document.getElementById('return-home').addEventListener('click', function(event) {
+            event.preventDefault();
+            alert("你被骗了");
+            setTimeout(function() {
+                window.location.href = "https://www.bilibili.com/video/BV1GJ411x7h7/";
+            }, 3000);
+        });
+    </script>
+</body>
+</html>
+
+
+
