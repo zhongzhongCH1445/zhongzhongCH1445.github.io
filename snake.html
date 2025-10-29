@@ -1,0 +1,1209 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>贪吃蛇游戏 - Minecraft风格</title>
+    <style>
+        /* 基础样式和Minecraft风格设定 */
+        body {
+            margin: 0;
+            padding: 0;
+            background-image: url('data:image/png;base64,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');
+            background-repeat: repeat;
+            font-family: 'CustomFont', monospace;
+            color: #FFFFFF;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            text-shadow: 2px 2px 0px #333333;
+        }
+
+        @font-face {
+            font-family: 'CustomFont';
+            src: url('1.ttf') format('truetype');
+            font-weight: normal;
+            font-style: normal;
+        }
+
+        .screen {
+            text-align: center;
+            width: 100%;
+            max-width: 1000px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        #game-screen, #achievements-screen {
+            display: none;
+        }
+
+        /* Minecraft风格按钮 */
+        .mc-btn {
+            background-image: url('data:image/png;base64,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');
+            border: 4px solid #AAAAAA;
+            border-radius: 0;
+            color: #FFFFFF;
+            padding: 10px 20px;
+            font-family: 'CustomFont', monospace;
+            font-size: 16px;
+            text-shadow: 2px 2px 0px #333333;
+            cursor: pointer;
+            transition: all 0.1s ease;
+            box-shadow: 0 4px 0px #333333;
+            position: relative;
+            top: 0;
+        }
+
+        .mc-btn:hover {
+            border-color: #FFFFFF;
+        }
+
+        .mc-btn:active {
+            top: 4px;
+            box-shadow: 0 0 0px #333333;
+        }
+
+        .mc-btn-green {
+            background-color: #4CAF50;
+        }
+
+        .mc-btn-red {
+            background-color: #f44336;
+        }
+
+        .mc-btn-blue {
+            background-color: #2196F3;
+        }
+
+        .mc-btn-yellow {
+            background-color: #ff9800;
+        }
+
+        /* 主页样式 */
+        #home-screen {
+            padding-top: 50px;
+        }
+
+        .mc-title {
+            font-size: 48px;
+            margin: 20px 0;
+            color: #4CAF50;
+            text-shadow: 4px 4px 0px #333333;
+        }
+
+        .mode-buttons {
+            margin: 40px 0;
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 15px 30px;
+            font-size: 24px;
+            width: 250px;
+        }
+
+        .home-footer {
+            margin-top: 60px;
+            color: #AAAAAA;
+            font-size: 14px;
+        }
+
+        /* 游戏界面样式 */
+        #game-screen {
+            padding-top: 20px;
+        }
+
+        #game-container {
+            position: relative;
+            float: left;
+            border: 8px solid #8B4513;
+            box-shadow: 0 8px 0px #333333;
+        }
+
+        #hud {
+            float: right;
+            width: 300px;
+            padding: 20px;
+            box-sizing: border-box;
+        }
+
+        #gameCanvas {
+            border: 2px solid #333;
+            background-color: #111;
+        }
+
+        .info-box {
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 4px solid #555555;
+            padding: 15px;
+            margin-bottom: 20px;
+        }
+
+        .info-box h3 {
+            margin-top: 0;
+            color: #4CAF50;
+            border-bottom: 2px solid #555555;
+            padding-bottom: 10px;
+        }
+
+        #score-board, #time-display, #level-display {
+            font-size: 20px;
+            margin: 10px 0;
+        }
+
+        .controls {
+            margin: 20px 0;
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+
+        .overlay {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: rgba(0, 0, 0, 0.85);
+            border: 6px solid #8B4513;
+            color: white;
+            padding: 20px 40px;
+            text-align: center;
+            display: none;
+            min-width: 300px;
+        }
+
+        .overlay h2 {
+            color: #4CAF50;
+            margin-top: 0;
+        }
+
+        #game-over, #pause-screen, #level-complete {
+            display: none;
+        }
+
+        .instructions {
+            margin-top: 20px;
+            color: #DDDDDD;
+            text-align: center;
+            max-width: 600px;
+            background-color: rgba(0, 0, 0, 0.5);
+            padding: 15px;
+            border: 2px solid #555555;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .food-legend {
+            display: flex;
+            align-items: center;
+            margin: 5px 0;
+        }
+
+        .food-icon {
+            width: 15px;
+            height: 15px;
+            margin-right: 10px;
+            border: 1px solid #333;
+        }
+
+        /* 成就界面 */
+        #achievements-screen {
+            padding-top: 30px;
+        }
+
+        .achievement {
+            display: flex;
+            align-items: center;
+            margin: 10px 0;
+            padding: 10px;
+            background-color: rgba(0, 0, 0, 0.7);
+            border: 2px solid #555555;
+        }
+
+        .achievement.unlocked {
+            border-color: #4CAF50;
+        }
+
+        .achievement-icon {
+            width: 30px;
+            height: 30px;
+            margin-right: 15px;
+            background-color: #555555;
+            border: 2px solid #333;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-weight: bold;
+        }
+
+        .achievement.unlocked .achievement-icon {
+            background-color: #4CAF50;
+        }
+
+        .achievement-info {
+            flex-grow: 1;
+        }
+
+        .achievement-title {
+            font-weight: bold;
+            margin: 0 0 5px 0;
+        }
+
+        .achievement-desc {
+            margin: 0;
+            font-size: 14px;
+            color: #BBBBBB;
+        }
+
+        .achievement-popup {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background-color: rgba(0, 0, 0, 0.9);
+            border: 4px solid #8B4513;
+            padding: 15px;
+            display: flex;
+            align-items: center;
+            z-index: 1000;
+            transform: translateY(150%);
+            transition: transform 0.3s ease-out;
+        }
+
+        .timer-bar {
+            height: 5px;
+            background-color: #555555;
+            margin: 5px 0;
+            overflow: hidden;
+            border: 1px solid #333;
+        }
+
+        .timer-progress {
+            height: 100%;
+            background-color: #2196F3;
+            width: 100%;
+            transition: width linear;
+        }
+
+        .shield-indicator {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            background-color: transparent;
+            border: 2px solid #2196F3;
+            margin-left: 10px;
+            position: relative;
+        }
+
+        .shield-indicator.active::after {
+            content: '';
+            position: absolute;
+            top: 3px;
+            left: 3px;
+            width: 10px;
+            height: 10px;
+            background-color: #2196F3;
+        }
+
+        /* 响应式调整 */
+        @media (max-width: 900px) {
+            #game-container, #hud {
+                float: none;
+                margin: 0 auto;
+            }
+            
+            #hud {
+                width: 100%;
+                max-width: 600px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <!-- 主页 -->
+    <div id="home-screen" class="screen">
+        <h1 class="mc-title">贪吃蛇游戏</h1>
+        <div class="instructions">
+            <p>像素风格贪吃蛇，多种模式和特殊元素</p>
+        </div>
+        <div class="mode-buttons">
+            <button class="mc-btn mc-btn-green mode-btn" onclick="startGame('endless')">无尽模式</button>
+            <button class="mc-btn mc-btn-blue mode-btn" onclick="startGame('levels')">闯关模式</button>
+        </div>
+        <button class="mc-btn mc-btn-yellow" onclick="showAchievements()">查看成就</button>
+        <div class="home-footer">
+            <p>© 2023 贪吃蛇游戏 - Minecraft风格</p>
+        </div>
+    </div>
+    
+    <!-- 成就界面 -->
+    <div id="achievements-screen" class="screen">
+        <h1 class="mc-title">游戏成就</h1>
+        <div id="achievements-container">
+            <!-- 成就将通过JS动态生成 -->
+        </div>
+        <button class="mc-btn mc-btn-red" onclick="backToHome()">返回主页</button>
+    </div>
+    
+    <!-- 游戏界面 -->
+    <div id="game-screen" class="screen">
+        <h1 class="mc-title" id="game-title">贪吃蛇游戏</h1>
+        <div style="overflow: auto;">
+            <div id="game-container">
+                <canvas id="gameCanvas" width="600" height="600"></canvas>
+                <div id="game-over" class="overlay">
+                    <h2>游戏结束!</h2>
+                    <p>最终分数: <span id="final-score">0</span></p>
+                    <p>游戏时间: <span id="final-time">00:00</span></p>
+                    <p id="game-over-message">撞到自己了!</p>
+                    <button class="mc-btn mc-btn-green" onclick="restartGame()">再来一局</button>
+                    <button class="mc-btn mc-btn-red" onclick="backToHome()">返回主页</button>
+                </div>
+                <div id="pause-screen" class="overlay">
+                    <h2>游戏暂停</h2>
+                    <p>按空格键或点击按钮继续</p>
+                    <button class="mc-btn mc-btn-green" onclick="togglePause()">继续</button>
+                </div>
+                <div id="level-complete" class="overlay">
+                    <h2>关卡完成!</h2>
+                    <p>恭喜你完成第 <span id="completed-level">1</span> 关</p>
+                    <p>得分: <span id="level-score">0</span></p>
+                    <p>用时: <span id="level-time">00:00</span></p>
+                    <button class="mc-btn mc-btn-green" onclick="nextLevel()">下一关</button>
+                    <button class="mc-btn mc-btn-red" onclick="backToHome()">返回主页</button>
+                </div>
+                <div id="achievement-popup" class="achievement-popup">
+                    <div class="achievement-icon">!</div>
+                    <div>
+                        <div class="achievement-title">新成就解锁!</div>
+                        <div class="achievement-desc" id="popup-desc">成就描述</div>
+                    </div>
+                </div>
+            </div>
+            
+            <div id="hud">
+                <div class="info-box">
+                    <h3>游戏信息</h3>
+                    <div id="level-display">关卡: 1 / 10</div>
+                    <div id="score-board">分数: 0</div>
+                    <div id="time-display">时间: 00:00</div>
+                    <div>护盾: <span class="shield-indicator" id="shield-indicator"></span></div>
+                </div>
+                
+                <div class="info-box">
+                    <h3>特殊食物</h3>
+                    <div class="food-legend">
+                        <div class="food-icon" style="background-color: #FF5252;"></div>
+                        <div>普通食物 (+10分)</div>
+                    </div>
+                    <div class="food-legend">
+                        <div class="food-icon" style="background-color: #9C27B0;"></div>
+                        <div>毒苹果 (缩短一节)</div>
+                    </div>
+                    <div class="food-legend">
+                        <div class="food-icon" style="background-color: #2196F3;"></div>
+                        <div>护盾苹果 (获得护盾)</div>
+                    </div>
+                </div>
+                
+                <div class="info-box">
+                    <h3>当前特殊食物</h3>
+                    <div id="current-special">无</div>
+                    <div class="timer-bar">
+                        <div id="special-timer" class="timer-progress"></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="controls">
+            <button class="mc-btn mc-btn-green" id="pause-btn" onclick="togglePause()">暂停</button>
+            <button class="mc-btn mc-btn-blue" onclick="setSpeed(200)">慢速</button>
+            <button class="mc-btn mc-btn-blue" onclick="setSpeed(150)">中速</button>
+            <button class="mc-btn mc-btn-blue" onclick="setSpeed(100)">快速</button>
+            <button class="mc-btn mc-btn-yellow" onclick="showAchievements()">成就</button>
+            <button class="mc-btn mc-btn-red" onclick="backToHome()">返回主页</button>
+        </div>
+        
+        <div class="instructions">
+            <p>使用方向键控制蛇的移动，或者WASD键</p>
+            <p>吃到食物得分，穿墙会从对面出来，撞到自己游戏结束</p>
+            <p>按空格键暂停/继续游戏</p>
+            <p id="mode-instructions">无尽模式: 尽可能获得高分</p>
+        </div>
+    </div>
+
+    <script>
+        // 获取元素
+        const canvas = document.getElementById('gameCanvas');
+        const ctx = canvas.getContext('2d');
+        const scoreBoard = document.getElementById('score-board');
+        const levelDisplay = document.getElementById('level-display');
+        const timeDisplay = document.getElementById('time-display');
+        const gameOverScreen = document.getElementById('game-over');
+        const finalScoreElement = document.getElementById('final-score');
+        const finalTimeElement = document.getElementById('final-time');
+        const gameOverMessage = document.getElementById('game-over-message');
+        const pauseScreen = document.getElementById('pause-screen');
+        const pauseBtn = document.getElementById('pause-btn');
+        const levelCompleteScreen = document.getElementById('level-complete');
+        const completedLevelElement = document.getElementById('completed-level');
+        const levelScoreElement = document.getElementById('level-score');
+        const levelTimeElement = document.getElementById('level-time');
+        const homeScreen = document.getElementById('home-screen');
+        const gameScreen = document.getElementById('game-screen');
+        const gameTitle = document.getElementById('game-title');
+        const modeInstructions = document.getElementById('mode-instructions');
+        const achievementsScreen = document.getElementById('achievements-screen');
+        const achievementsContainer = document.getElementById('achievements-container');
+        const achievementPopup = document.getElementById('achievement-popup');
+        const popupDesc = document.getElementById('popup-desc');
+        const currentSpecialElement = document.getElementById('current-special');
+        const specialTimerElement = document.getElementById('special-timer');
+        const shieldIndicator = document.getElementById('shield-indicator');
+        
+        // 游戏设置
+        const gridSize = 20;
+        const tileCount = canvas.width / gridSize;
+        let snake = [];
+        let food = {};
+        let specialFood = null;
+        let specialFoodType = null; // 'poison' 或 'shield'
+        let specialFoodTimer = 0;
+        const SPECIAL_FOOD_DURATION = 10000; // 特殊食物持续10秒
+        
+        // 浅绿色边框颜色
+        const gridBorderColor = '#8BC34A';
+        
+        let dx = gridSize;
+        let dy = 0;
+        let score = 0;
+        let gameLoop;
+        let gameSpeed = 150; // 毫秒
+        let isGameOver = false;
+        let isPaused = false;
+        let gameMode = 'endless'; // 默认为无尽模式
+        let currentLevel = 1;
+        let levelGoal = 50; // 第一关目标分数
+        let maxLevels = 10;
+        
+        // 计时系统
+        let gameStartTime = 0;
+        let elapsedTime = 0;
+        let timerInterval;
+        
+        // 护盾系统
+        let hasShield = false;
+        
+        // 成就系统
+        let achievements = [
+            {
+                id: 'first_score',
+                title: '初尝胜果',
+                description: '获得第一个10分',
+                unlocked: false
+            },
+            {
+                id: '100_points',
+                title: '百发百中',
+                description: '累计获得100分',
+                unlocked: false
+            },
+            {
+                id: '500_points',
+                title: '得分能手',
+                description: '累计获得500分',
+                unlocked: false
+            },
+            {
+                id: 'level_5',
+                title: '闯关达人',
+                description: '达到第5关',
+                unlocked: false
+            },
+            {
+                id: 'shield_user',
+                title: '铜墙铁壁',
+                description: '获得10个护盾',
+                unlocked: false,
+                progress: 0,
+                target: 10
+            },
+            {
+                id: 'poison_survivor',
+                title: '毒物克星',
+                description: '吃到5个毒苹果并存活',
+                unlocked: false,
+                progress: 0,
+                target: 5
+            },
+            {
+                id: '3_minutes',
+                title: '持久战斗',
+                description: '单局游戏持续3分钟',
+                unlocked: false
+            },
+            {
+                id: 'all_levels',
+                title: '通关大师',
+                description: '完成所有10关',
+                unlocked: false
+            }
+        ];
+        
+        // 初始化游戏
+        function initGame() {
+            // 初始化蛇
+            snake = [
+                {x: 100, y: 100},
+                {x: 80, y: 100},
+                {x: 60, y: 100}
+            ];
+            
+            // 生成初始食物
+            generateFood();
+            specialFood = null;
+            specialFoodType = null;
+            specialFoodTimer = 0;
+            updateSpecialFoodDisplay();
+            
+            // 重置状态
+            score = 0;
+            hasShield = false;
+            updateShieldIndicator();
+            scoreBoard.textContent = `分数: ${score}`;
+            isGameOver = false;
+            isPaused = false;
+            
+            // 重置计时
+            elapsedTime = 0;
+            timeDisplay.textContent = formatTime(elapsedTime);
+            clearInterval(timerInterval);
+            gameStartTime = Date.now() - elapsedTime;
+            timerInterval = setInterval(updateTime, 1000);
+            
+            // 隐藏所有屏幕
+            gameOverScreen.style.display = 'none';
+            pauseScreen.style.display = 'none';
+            levelCompleteScreen.style.display = 'none';
+            pauseBtn.textContent = '暂停';
+            
+            // 设置初始方向
+            dx = gridSize;
+            dy = 0;
+            
+            // 根据模式设置
+            if (gameMode === 'levels') {
+                currentLevel = 1;
+                setLevel(currentLevel);
+                levelDisplay.style.display = 'block';
+            } else {
+                levelDisplay.style.display = 'none';
+                gameSpeed = 150;
+            }
+            
+            // 开始游戏循环
+            if (gameLoop) clearInterval(gameLoop);
+            gameLoop = setInterval(update, gameSpeed);
+            
+            // 随机生成特殊食物
+            scheduleSpecialFood();
+        }
+        
+        // 设置关卡
+        function setLevel(level) {
+            currentLevel = level;
+            levelDisplay.textContent = `关卡: ${currentLevel} / ${maxLevels}`;
+            
+            // 每关增加难度
+            levelGoal = 50 * currentLevel;
+            gameSpeed = Math.max(60, 150 - (currentLevel - 1) * 10); // 速度随关卡增加
+            
+            // 更新说明
+            modeInstructions.textContent = `闯关模式: 第 ${currentLevel} 关，目标分数 ${levelGoal} 分`;
+        }
+        
+        // 生成普通食物
+        function generateFood() {
+            food = {
+                x: Math.floor(Math.random() * tileCount) * gridSize,
+                y: Math.floor(Math.random() * tileCount) * gridSize
+            };
+            
+            // 确保食物不会出现在蛇身上或特殊食物位置
+            const onSnake = snake.some(segment => segment.x === food.x && segment.y === food.y);
+            const onSpecialFood = specialFood && food.x === specialFood.x && food.y === specialFood.y;
+            
+            if (onSnake || onSpecialFood) {
+                generateFood();
+            }
+        }
+        
+        // 生成特殊食物
+        function generateSpecialFood() {
+            if (isGameOver || isPaused) return;
+            
+            // 50%概率生成毒苹果，50%概率生成护盾苹果
+            const rand = Math.random();
+            specialFoodType = rand < 0.5 ? 'poison' : 'shield';
+            
+            specialFood = {
+                x: Math.floor(Math.random() * tileCount) * gridSize,
+                y: Math.floor(Math.random() * tileCount) * gridSize
+            };
+            
+            // 确保特殊食物不会出现在蛇身上或普通食物位置
+            const onSnake = snake.some(segment => segment.x === specialFood.x && segment.y === specialFood.y);
+            const onFood = food.x === specialFood.x && food.y === specialFood.y;
+            
+            if (onSnake || onFood) {
+                return generateSpecialFood();
+            }
+            
+            specialFoodTimer = Date.now();
+            updateSpecialFoodDisplay();
+        }
+        
+        // 调度特殊食物生成
+        function scheduleSpecialFood() {
+            if (isGameOver) return;
+            
+            // 5-15秒内随机生成下一个特殊食物
+            const delay = Math.random() * 10000 + 5000;
+            setTimeout(generateSpecialFood, delay);
+        }
+        
+        // 更新特殊食物显示
+        function updateSpecialFoodDisplay() {
+            if (!specialFood) {
+                currentSpecialElement.textContent = '无';
+                specialTimerElement.style.width = '0%';
+                return;
+            }
+            
+            const elapsed = Date.now() - specialFoodTimer;
+            const remaining = Math.max(0, SPECIAL_FOOD_DURATION - elapsed);
+            const percentage = (remaining / SPECIAL_FOOD_DURATION) * 100;
+            
+            specialTimerElement.style.width = `${percentage}%`;
+            
+            if (specialFoodType === 'poison') {
+                currentSpecialElement.textContent = '毒苹果 (缩短一节)';
+                specialTimerElement.style.backgroundColor = '#9C27B0';
+            } else {
+                currentSpecialElement.textContent = '护盾苹果 (获得护盾)';
+                specialTimerElement.style.backgroundColor = '#2196F3';
+            }
+            
+            // 特殊食物过期
+            if (elapsed >= SPECIAL_FOOD_DURATION) {
+                specialFood = null;
+                specialFoodType = null;
+                updateSpecialFoodDisplay();
+                scheduleSpecialFood();
+            }
+        }
+        
+        // 更新护盾指示器
+        function updateShieldIndicator() {
+            shieldIndicator.classList.toggle('active', hasShield);
+        }
+        
+        // 更新时间显示
+        function updateTime() {
+            if (isGameOver || isPaused) return;
+            
+            elapsedTime = Date.now() - gameStartTime;
+            timeDisplay.textContent = formatTime(elapsedTime);
+            
+            // 检查3分钟成就
+            if (elapsedTime >= 3 * 60 * 1000) {
+                unlockAchievement('3_minutes');
+            }
+        }
+        
+        // 格式化时间为MM:SS
+        function formatTime(ms) {
+            const totalSeconds = Math.floor(ms / 1000);
+            const minutes = Math.floor(totalSeconds / 60);
+            const seconds = totalSeconds % 60;
+            return `${minutes.toString().padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`;
+        }
+        
+        // 更新游戏状态
+        function update() {
+            if (isGameOver || isPaused) return;
+            
+            // 清除画布
+            ctx.fillStyle = '#111';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            // 绘制浅绿色网格
+            drawGrid();
+            
+            // 检查特殊食物是否过期
+            if (specialFood) {
+                const elapsed = Date.now() - specialFoodTimer;
+                if (elapsed >= SPECIAL_FOOD_DURATION) {
+                    specialFood = null;
+                    specialFoodType = null;
+                    updateSpecialFoodDisplay();
+                    scheduleSpecialFood();
+                }
+            }
+            
+            // 移动蛇 - 创建新的头部
+            let head = {x: snake[0].x + dx, y: snake[0].y + dy};
+            
+            // 穿墙逻辑：从一面墙穿出时，从对面墙穿入
+            if (head.x < 0) {
+                head.x = canvas.width - gridSize; // 左边墙穿出，右边墙穿入
+            } else if (head.x >= canvas.width) {
+                head.x = 0; // 右边墙穿出，左边墙穿入
+            }
+            
+            if (head.y < 0) {
+                head.y = canvas.height - gridSize; // 上边墙穿出，下边墙穿入
+            } else if (head.y >= canvas.height) {
+                head.y = 0; // 下边墙穿出，上边墙穿入
+            }
+            
+            // 检查自身碰撞
+            const selfCollision = snake.some(segment => segment.x === head.x && segment.y === head.y);
+            if (selfCollision) {
+                // 如果有护盾，消耗护盾并避免死亡
+                if (hasShield) {
+                    hasShield = false;
+                    updateShieldIndicator();
+                    gameOverMessage.textContent = '护盾保护了你!';
+                    
+                    // 轻微惩罚：缩短蛇
+                    if (snake.length > 3) {
+                        snake.pop();
+                        snake.pop();
+                    }
+                } else {
+                    gameOver('撞到自己了!');
+                    return;
+                }
+            }
+            
+            // 将新头部添加到蛇
+            snake.unshift(head);
+            
+            // 检查是否吃到普通食物
+            if (head.x === food.x && head.y === food.y) {
+                score += 10;
+                scoreBoard.textContent = `分数: ${score}`;
+                generateFood();
+                
+                // 检查分数成就
+                if (score >= 10) unlockAchievement('first_score');
+                if (score >= 100) unlockAchievement('100_points');
+                if (score >= 500) unlockAchievement('500_points');
+                
+                // 闯关模式检查是否完成关卡
+                if (gameMode === 'levels' && score >= levelGoal) {
+                    completeLevel();
+                    return;
+                }
+                
+                // 无尽模式随分数增加速度
+                if (gameMode === 'endless' && score % 100 === 0 && gameSpeed > 60) {
+                    gameSpeed -= 5;
+                    clearInterval(gameLoop);
+                    gameLoop = setInterval(update, gameSpeed);
+                }
+            } 
+            // 检查是否吃到特殊食物
+            else if (specialFood && head.x === specialFood.x && head.y === specialFood.y) {
+                if (specialFoodType === 'poison') {
+                    // 毒苹果：缩短一节（至少保留3节）
+                    if (snake.length > 3) {
+                        snake.pop();
+                        snake.pop(); // 移除两节作为惩罚
+                        score = Math.max(0, score - 5); // 扣5分
+                        scoreBoard.textContent = `分数: ${score}`;
+                    }
+                    
+                    // 更新毒苹果成就进度
+                    const poisonAchievement = achievements.find(a => a.id === 'poison_survivor');
+                    if (poisonAchievement && !poisonAchievement.unlocked) {
+                        poisonAchievement.progress = Math.min(poisonAchievement.target, poisonAchievement.progress + 1);
+                        if (poisonAchievement.progress >= poisonAchievement.target) {
+                            unlockAchievement('poison_survivor');
+                        }
+                        saveAchievements();
+                        renderAchievements();
+                    }
+                } else if (specialFoodType === 'shield') {
+                    // 护盾苹果：获得护盾
+                    hasShield = true;
+                    updateShieldIndicator();
+                    
+                    // 更新护盾成就进度
+                    const shieldAchievement = achievements.find(a => a.id === 'shield_user');
+                    if (shieldAchievement && !shieldAchievement.unlocked) {
+                        shieldAchievement.progress = Math.min(shieldAchievement.target, shieldAchievement.progress + 1);
+                        if (shieldAchievement.progress >= shieldAchievement.target) {
+                            unlockAchievement('shield_user');
+                        }
+                        saveAchievements();
+                        renderAchievements();
+                    }
+                }
+                
+                // 清除特殊食物
+                specialFood = null;
+                specialFoodType = null;
+                updateSpecialFoodDisplay();
+                scheduleSpecialFood();
+            } else {
+                // 如果没吃到任何食物，移除尾部
+                snake.pop();
+            }
+            
+            // 绘制蛇
+            snake.forEach((segment, index) => {
+                // 头部颜色不同
+                if (index === 0) {
+                    ctx.fillStyle = hasShield ? '#2196F3' : '#4CAF50'; // 有护盾时头部变蓝色
+                } else {
+                    ctx.fillStyle = '#8BC34A'; // 浅绿色身体
+                }
+                ctx.fillRect(segment.x, segment.y, gridSize - 1, gridSize - 1); // -1 是为了显示网格线
+            });
+            
+            // 绘制普通食物
+            ctx.fillStyle = '#FF5252'; // 红色食物
+            ctx.fillRect(food.x, food.y, gridSize - 1, gridSize - 1);
+            
+            // 绘制特殊食物
+            if (specialFood) {
+                if (specialFoodType === 'poison') {
+                    ctx.fillStyle = '#9C27B0'; // 紫色毒苹果
+                } else {
+                    ctx.fillStyle = '#2196F3'; // 蓝色护盾苹果
+                }
+                ctx.fillRect(specialFood.x, specialFood.y, gridSize - 1, gridSize - 1);
+                
+                // 特殊食物闪烁效果（快过期时）
+                const elapsed = Date.now() - specialFoodTimer;
+                if (elapsed > SPECIAL_FOOD_DURATION - 3000) {
+                    const blinkRate = Math.floor(Date.now() / 200) % 2;
+                    if (blinkRate === 0) {
+                        ctx.fillStyle = 'rgba(255, 255, 255, 0.5)';
+                        ctx.fillRect(specialFood.x, specialFood.y, gridSize - 1, gridSize - 1);
+                    }
+                }
+            }
+            
+            // 闯关模式绘制目标进度
+            if (gameMode === 'levels') {
+                drawLevelProgress();
+            }
+            
+            // 更新特殊食物显示
+            updateSpecialFoodDisplay();
+        }
+        
+        // 绘制浅绿色网格
+        function drawGrid() {
+            ctx.strokeStyle = gridBorderColor;
+            ctx.lineWidth = 0.5;
+            
+            // 绘制水平线
+            for (let y = 0; y <= canvas.height; y += gridSize) {
+                ctx.beginPath();
+                ctx.moveTo(0, y);
+                ctx.lineTo(canvas.width, y);
+                ctx.stroke();
+            }
+            
+            // 绘制垂直线
+            for (let x = 0; x <= canvas.width; x += gridSize) {
+                ctx.beginPath();
+                ctx.moveTo(x, 0);
+                ctx.lineTo(x, canvas.height);
+                ctx.stroke();
+            }
+        }
+        
+        // 绘制关卡进度
+        function drawLevelProgress() {
+            const progress = Math.min(100, (score / levelGoal) * 100);
+            ctx.fillStyle = 'rgba(76, 175, 80, 0.5)';
+            ctx.fillRect(10, 10, (canvas.width - 20) * (progress / 100), 10);
+            ctx.strokeStyle = '#4CAF50';
+            ctx.strokeRect(10, 10, canvas.width - 20, 10);
+        }
+        
+        // 游戏结束
+        function gameOver(message) {
+            isGameOver = true;
+            clearInterval(gameLoop);
+            clearInterval(timerInterval);
+            finalScoreElement.textContent = score;
+            finalTimeElement.textContent = formatTime(elapsedTime);
+            gameOverMessage.textContent = message || '游戏结束!';
+            gameOverScreen.style.display = 'block';
+        }
+        
+        // 完成关卡
+        function completeLevel() {
+            clearInterval(gameLoop);
+            clearInterval(timerInterval);
+            
+            // 检查关卡成就
+            if (currentLevel >= 5) unlockAchievement('level_5');
+            if (currentLevel >= maxLevels) unlockAchievement('all_levels');
+            
+            if (currentLevel >= maxLevels) {
+                gameOver(`恭喜你完成所有${maxLevels}关!`);
+                return;
+            }
+            
+            completedLevelElement.textContent = currentLevel;
+            levelScoreElement.textContent = score;
+            levelTimeElement.textContent = formatTime(elapsedTime);
+            levelCompleteScreen.style.display = 'block';
+        }
+        
+        // 下一关
+        function nextLevel() {
+            currentLevel++;
+            setLevel(currentLevel);
+            
+            // 重置蛇但保留一部分长度
+            const newLength = Math.max(3, snake.length - 5);
+            snake = snake.slice(0, newLength);
+            
+            // 生成新食物
+            generateFood();
+            specialFood = null;
+            specialFoodType = null;
+            updateSpecialFoodDisplay();
+            
+            // 重置计时
+            elapsedTime = 0;
+            timeDisplay.textContent = formatTime(elapsedTime);
+            gameStartTime = Date.now();
+            timerInterval = setInterval(updateTime, 1000);
+            
+            // 继续游戏
+            levelCompleteScreen.style.display = 'none';
+            gameLoop = setInterval(update, gameSpeed);
+            scheduleSpecialFood();
+        }
+        
+        // 重新开始游戏
+        function restartGame() {
+            clearInterval(timerInterval);
+            initGame();
+        }
+        
+        // 返回主页
+        function backToHome() {
+            clearInterval(gameLoop);
+            clearInterval(timerInterval);
+            gameScreen.style.display = 'none';
+            achievementsScreen.style.display = 'none';
+            homeScreen.style.display = 'block';
+        }
+        
+        // 显示成就界面
+        function showAchievements() {
+            renderAchievements();
+            homeScreen.style.display = 'none';
+            gameScreen.style.display = 'none';
+            achievementsScreen.style.display = 'block';
+        }
+        
+        // 开始游戏
+        function startGame(mode) {
+            gameMode = mode;
+            homeScreen.style.display = 'none';
+            achievementsScreen.style.display = 'none';
+            gameScreen.style.display = 'block';
+            
+            if (mode === 'endless') {
+                gameTitle.textContent = '贪吃蛇游戏 - 无尽模式';
+                modeInstructions.textContent = '无尽模式: 尽可能获得高分，分数越高速度越快';
+            } else {
+                gameTitle.textContent = '贪吃蛇游戏 - 闯关模式';
+            }
+            
+            initGame();
+        }
+        
+        // 暂停/继续游戏
+        function togglePause() {
+            if (isGameOver) return; // 游戏结束时不能暂停
+            
+            isPaused = !isPaused;
+            
+            if (isPaused) {
+                clearInterval(gameLoop);
+                clearInterval(timerInterval);
+                pauseScreen.style.display = 'block';
+                pauseBtn.textContent = '继续';
+            } else {
+                gameLoop = setInterval(update, gameSpeed);
+                gameStartTime = Date.now() - elapsedTime;
+                timerInterval = setInterval(updateTime, 1000);
+                pauseScreen.style.display = 'none';
+                pauseBtn.textContent = '暂停';
+            }
+        }
+        
+        // 设置游戏速度
+        function setSpeed(speed) {
+            gameSpeed = speed;
+            
+            // 如果游戏正在运行，更新游戏循环
+            if (!isGameOver && !isPaused) {
+                clearInterval(gameLoop);
+                gameLoop = setInterval(update, gameSpeed);
+            }
+        }
+        
+        // 解锁成就
+        function unlockAchievement(achievementId) {
+            const achievement = achievements.find(a => a.id === achievementId);
+            if (achievement && !achievement.unlocked) {
+                achievement.unlocked = true;
+                saveAchievements();
+                renderAchievements();
+                
+                // 显示成就解锁弹窗
+                popupDesc.textContent = achievement.description;
+                achievementPopup.style.transform = 'translateY(0)';
+                
+                // 3秒后隐藏弹窗
+                setTimeout(() => {
+                    achievementPopup.style.transform = 'translateY(150%)';
+                }, 3000);
+            }
+        }
+        
+        // 保存成就到本地存储
+        function saveAchievements() {
+            localStorage.setItem('snakeAchievements', JSON.stringify(achievements));
+        }
+        
+        // 从本地存储加载成就
+        function loadAchievements() {
+            const saved = localStorage.getItem('snakeAchievements');
+            if (saved) {
+                achievements = JSON.parse(saved);
+            }
+        }
+        
+        // 渲染成就列表
+        function renderAchievements() {
+            achievementsContainer.innerHTML = '';
+            
+            achievements.forEach(achievement => {
+                const achievementEl = document.createElement('div');
+                achievementEl.className = `achievement ${achievement.unlocked ? 'unlocked' : ''}`;
+                
+                let progressText = '';
+                if (achievement.progress !== undefined && achievement.target) {
+                    progressText = ` (${achievement.progress}/${achievement.target})`;
+                }
+                
+                achievementEl.innerHTML = `
+                    <div class="achievement-icon">${achievement.unlocked ? '✓' : '?'}</div>
+                    <div class="achievement-info">
+                        <div class="achievement-title">${achievement.title}${progressText}</div>
+                        <div class="achievement-desc">${achievement.description}</div>
+                    </div>
+                `;
+                
+                achievementsContainer.appendChild(achievementEl);
+            });
+        }
+        
+        // 控制方向和暂停
+        function handleKeyPress(event) {
+            // 屏蔽上下键的页面滚动行为
+            if ([38, 40].includes(event.keyCode)) {
+                event.preventDefault();
+            }
+            
+            // 空格键控制暂停/继续
+            if (event.keyCode === 32) {
+                event.preventDefault(); // 防止页面滚动
+                togglePause();
+                return;
+            }
+            
+            // 暂停时不处理方向键
+            if (isPaused) return;
+            
+            const LEFT_KEY = 37;
+            const RIGHT_KEY = 39;
+            const UP_KEY = 38;
+            const DOWN_KEY = 40;
+            
+            const keyPressed = event.keyCode;
+            
+            // 防止180度转向
+            const goingUp = dy === -gridSize;
+            const goingDown = dy === gridSize;
+            const goingRight = dx === gridSize;
+            const goingLeft = dx === -gridSize;
+            
+            if (keyPressed === LEFT_KEY && !goingRight) {
+                dx = -gridSize;
+                dy = 0;
+            }
+            if (keyPressed === UP_KEY && !goingDown) {
+                dy = -gridSize;
+                dx = 0;
+            }
+            if (keyPressed === RIGHT_KEY && !goingLeft) {
+                dx = gridSize;
+                dy = 0;
+            }
+            if (keyPressed === DOWN_KEY && !goingUp) {
+                dy = gridSize;
+                dx = 0;
+            }
+            
+            // 支持WASD键
+            const wKey = 87;
+            const aKey = 65;
+            const sKey = 83;
+            const dKey = 68;
+            
+            if (keyPressed === aKey && !goingRight) {
+                dx = -gridSize;
+                dy = 0;
+            }
+            if (keyPressed === wKey && !goingDown) {
+                dy = -gridSize;
+                dx = 0;
+            }
+            if (keyPressed === dKey && !goingLeft) {
+                dx = gridSize;
+                dy = 0;
+            }
+            if (keyPressed === sKey && !goingUp) {
+                dy = gridSize;
+                dx = 0;
+            }
+        }
+        
+        // 加载成就并初始化事件监听
+        loadAchievements();
+        document.addEventListener('keydown', handleKeyPress);
+    </script>
+</body>
+</html>
