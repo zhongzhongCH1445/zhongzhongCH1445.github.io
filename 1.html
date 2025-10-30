@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <!-- 替换页面图标为1.ico -->
+  <link rel="icon" href="1.ico" type="image/x-icon">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- 修改标题为“俄罗斯套娃” -->
+  <title>俄罗斯套娃</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  
+  <!-- 引入本地字体1.ttf并配置为全局字体 -->
+  <style>
+    @font-face {
+      font-family: 'CustomFont';
+      src: url('1.ttf') format('truetype');
+      font-weight: normal;
+      font-style: normal;
+    }
+    * {
+      font-family: 'CustomFont', sans-serif !important;
+    }
+  </style>
+  
+  <!-- 配置Tailwind自定义颜色和工具类 -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            primary: '#3B82F6',
+            secondary: '#10B981',
+            dark: '#1E293B',
+          },
+        },
+      }
+    }
+  </script>
+  
+  <style type="text/tailwindcss">
+    @layer utilities {
+      .content-auto {
+        content-visibility: auto;
+      }
+      .window-drag {
+        cursor: move;
+      }
+      .resize-handle {
+        cursor: nwse-resize;
+      }
+      .window-shadow {
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
+      }
+    }
+  </style>
+</head>
+<body class="bg-gray-100 min-h-screen flex items-center justify-center p-4">
+  <!-- 主界面（标题改为“俄罗斯套娃”） -->
+  <div class="text-center max-w-md">
+    <h1 class="text-[clamp(1.5rem,3vw,2.5rem)] font-bold text-dark mb-6">俄罗斯套娃</h1>
+    <p class="text-gray-600 mb-8">点击下方按钮开始捕获屏幕，捕获内容将显示在可拖动、调整大小的悬浮窗中（含自身）</p>
+    <button id="startCapture" class="bg-primary hover:bg-primary/90 text-white font-medium py-3 px-6 rounded-lg transition-all duration-300 shadow-lg hover:shadow-xl flex items-center justify-center mx-auto">
+      <span>开始屏幕捕获</span>
+    </button>
+  </div>
+
+  <!-- 悬浮窗容器（标题栏文字改为“俄罗斯套娃”） -->
+  <div id="floatingWindow" class="fixed top-10 left-10 bg-white rounded-lg overflow-hidden window-shadow z-50 hidden" style="width: 320px; height: 240px;">
+    <!-- 窗口标题栏 -->
+    <div id="windowHeader" class="bg-dark text-white p-3 window-drag flex justify-between items-center">
+      <div class="flex items-center">
+        <span>俄罗斯套娃</span>
+      </div>
+      <div>
+        <button id="closeWindow" class="text-white hover:text-gray-300 transition-colors">
+          ×
+        </button>
+      </div>
+    </div>
+    
+    <!-- 窗口内容区域 -->
+    <div class="relative h-[calc(100%-42px)]">
+      <img id="captureImage" class="w-full h-full object-contain" src="" alt="屏幕捕获内容">
+      
+      <!-- 右下角调整大小的手柄 -->
+      <div id="resizeHandle" class="absolute bottom-0 right-0 w-5 h-5 bg-primary resize-handle flex items-center justify-center">
+        <span class="text-white text-xs">⟲</span>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // 获取DOM元素
+    const startCaptureBtn = document.getElementById('startCapture');
+    const floatingWindow = document.getElementById('floatingWindow');
+    const windowHeader = document.getElementById('windowHeader');
+    const resizeHandle = document.getElementById('resizeHandle');
+    const closeWindowBtn = document.getElementById('closeWindow');
+    const captureImage = document.getElementById('captureImage');
+    
+    // 变量初始化
+    let mediaStream = null;
+    let captureInterval = null;
+    let canvas = document.createElement('canvas');
+    let ctx = canvas.getContext('2d');
+    let isResizing = false;
+    let isDragging = false;
+    let startX, startY, startWidth, startHeight, windowX, windowY;
+    // 30fps对应的帧间隔时间(毫秒)
+    const FRAME_INTERVAL = 1000 / 30;
+    
+    // 请求屏幕捕获权限并开始捕获
+    startCaptureBtn.addEventListener('click', async () => {
+      try {
+        // 请求屏幕捕获
+        mediaStream = await navigator.mediaDevices.getDisplayMedia({
+          video: { 
+            cursor: "always", // 始终显示鼠标光标
+            displaySurface: "monitor" // 捕获整个显示器
+          },
+          audio: false
+        });
+        
+        // 创建视频元素用于捕获
+        const video = document.createElement('video');
+        video.srcObject = mediaStream;
+        video.onloadedmetadata = () => {
+          canvas.width = video.videoWidth;
+          canvas.height = video.videoHeight;
+          
+          // 显示悬浮窗
+          floatingWindow.classList.remove('hidden');
+          
+          // 开始定期捕获屏幕（使用30fps的帧间隔）
+          startCaptureInterval(video);
+        };
+        video.play();
+        
+        // 隐藏开始按钮
+        startCaptureBtn.classList.add('hidden');
+      } catch (err) {
+        console.error('屏幕捕获失败:', err);
+        alert('无法访问屏幕捕获，请确保已授予浏览器权限');
+      }
+    });
+    
+    // 定期捕获屏幕并更新悬浮窗内容（核心“套娃”逻辑）
+    function startCaptureInterval(video) {
+      captureInterval = setInterval(() => {
+        // 绘制当前屏幕内容到canvas（包含悬浮窗自身）
+        ctx.drawImage(video, 0, 0, canvas.width, canvas.height);
+        
+        // 转换为图片URL并更新到悬浮窗，实现“套娃”显示
+        const imageUrl = canvas.toDataURL('image/png');
+        captureImage.src = imageUrl;
+      }, FRAME_INTERVAL); // 使用30fps的帧间隔
+    }
+    
+    // 关闭窗口逻辑
+    closeWindowBtn.addEventListener('click', () => {
+      if (mediaStream) mediaStream.getTracks().forEach(track => track.stop());
+      if (captureInterval) clearInterval(captureInterval);
+      floatingWindow.classList.add('hidden');
+      startCaptureBtn.classList.remove('hidden');
+    });
+    
+    // 悬浮窗拖动逻辑
+    windowHeader.addEventListener('mousedown', (e) => {
+      isDragging = true;
+      startX = e.clientX;
+      startY = e.clientY;
+      const rect = floatingWindow.getBoundingClientRect();
+      windowX = rect.left;
+      windowY = rect.top;
+      windowHeader.classList.add('bg-primary');
+    });
+    
+    // 悬浮窗调整大小逻辑
+    resizeHandle.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      isResizing = true;
+      startWidth = floatingWindow.offsetWidth;
+      startHeight = floatingWindow.offsetHeight;
+      startX = e.clientX;
+      startY = e.clientY;
+    });
+    
+    // 全局鼠标移动事件（处理拖动和缩放）
+    document.addEventListener('mousemove', (e) => {
+      if (isDragging) {
+        // 计算新位置并限制在可视区域内
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        const newX = Math.max(0, Math.min(windowX + dx, window.innerWidth - 50));
+        const newY = Math.max(0, Math.min(windowY + dy, window.innerHeight - 50));
+        floatingWindow.style.left = `${newX}px`;
+        floatingWindow.style.top = `${newY}px`;
+      } else if (isResizing) {
+        // 计算新尺寸并限制最小大小（200x150px）
+        const dx = e.clientX - startX;
+        const dy = e.clientY - startY;
+        const newWidth = Math.max(200, startWidth + dx);
+        const newHeight = Math.max(150, startHeight + dy);
+        floatingWindow.style.width = `${newWidth}px`;
+        floatingWindow.style.height = `${newHeight}px`;
+      }
+    });
+    
+    // 鼠标松开时结束操作
+    document.addEventListener('mouseup', () => {
+      isDragging = false;
+      isResizing = false;
+      windowHeader.classList.remove('bg-primary');
+    });
+    
+    // 防止图片拖动影响窗口操作
+    captureImage.addEventListener('mousedown', (e) => e.preventDefault());
+    
+    // 页面关闭前清理资源
+    window.addEventListener('beforeunload', () => {
+      if (mediaStream) mediaStream.getTracks().forEach(track => track.stop());
+      if (captureInterval) clearInterval(captureInterval);
+    });
+  </script>
+</body>
+</html>
